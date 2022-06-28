@@ -33,8 +33,20 @@ fun LoginScreen(
                 when (loginSubState) {
                     LoginSubState.SignIn -> SignInView(
                         this@with,
-                        onTextFieldChange = {
+                        onEmailFieldChange = {
                             loginViewModel.obtainEvent(LoginEvent.EmailChanged(it))
+                        },
+                        onPasswordFieldChange = {
+                            loginViewModel.obtainEvent(LoginEvent.PasswordChanged(it))
+                        },
+                        onForgetClick = {
+                            loginViewModel.obtainEvent(LoginEvent.ForgetClicked)
+                        },
+                        onLoginClick = {
+                            loginViewModel.obtainEvent(LoginEvent.LoginClicked)
+                        },
+                        onRegisterClick = {
+                            loginViewModel.obtainEvent(LoginEvent.RegisterClicked)
                         }
                     )
                     LoginSubState.SignUp -> SignUpView()

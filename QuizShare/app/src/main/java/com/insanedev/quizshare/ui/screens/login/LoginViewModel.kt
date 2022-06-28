@@ -19,8 +19,18 @@ class LoginViewModel @Inject constructor() : ViewModel(), EventHandler<LoginEven
         when(event) {
             LoginEvent.ActionClicked -> switchActionState()
             is LoginEvent.EmailChanged -> emailChanged(event.value)
+            is LoginEvent.PasswordChanged -> passwordChanged(event.value)
+            is LoginEvent.ForgetClicked -> forgetClicked()
+            is LoginEvent.LoginClicked -> loginClicked()
+            is LoginEvent.RegisterClicked -> registerClicked()
         }
     }
+
+    private fun registerClicked() {}
+
+    private fun loginClicked() {}
+
+    private fun forgetClicked() {}
 
     private fun switchActionState() {
 
@@ -32,5 +42,9 @@ class LoginViewModel @Inject constructor() : ViewModel(), EventHandler<LoginEven
 
     private fun emailChanged(value: String) {
         _viewState.postValue(_viewState.value?.copy(emailValue = value))
+    }
+
+    private fun passwordChanged(value: String) {
+        _viewState.postValue(_viewState.value?.copy(passwordValue = value))
     }
 }

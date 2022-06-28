@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">QuizShare</string>
     <string name="email_hint">E-mail</string>
+    <string name="password_hint">Пароль</string>
+    <string name="forget_password_button">Забыли пароль?</string>
+    <string name="btn_logIn">Войти</string>
+    <string name="btn_register">Регистрация</string>
 </resources>
