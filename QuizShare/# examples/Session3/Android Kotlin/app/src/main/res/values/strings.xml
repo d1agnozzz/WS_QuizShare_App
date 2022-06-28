@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">WorldCinema</string>
+
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Пароль</string>
+
+    <string name="action_login">Войти</string>
+    <string name="action_registration">Регистрация</string>
+    <string name="action_change">Изменить</string>
+    <string name="action_watch">Смотреть</string>
+    <string name="action_exit">Выход</string>
+
+    <string name="title_main">Главное</string>
+    <string name="title_recommendations">Подборка</string>
+    <string name="title_collection">Коллекция</string>
+    <string name="title_discussions">Обсуждения</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_history">История</string>
+    <string name="title_top">В тренде</string>
+    <string name="title_new">Новое</string>
+    <string name="title_for_you">Для вас</string>
+
+    <string name="text_you_have_watched">Вы смотрели</string>
+    <string name="text_restriction">18+</string>
+    <string name="text_footage">Кадры</string>
+    <string name="text_episodes">Эпизоды</string>
+
+
+    <string name="placeholder_name">Воланд Иванов</string>
+    <string name="placeholder_email">voland.ivanov@gmail.com</string>
+    <string name="placeholder_last_film">Altered Carbon</string>
+    <string name="placeholder_message_info">Иван Иванов • 18:30</string>
+    <string name="placeholder_message_text">Мне кажется, достойное завершение. Кто бы что ни говорил, а мне понравилось.</string>
+    <string name="placeholder_message_day">Сегодня</string>
+    <string name="placeholder_seasons">5 сезонов</string>
+    <string name="placeholder_film_genre">Приключения</string>
+    <string name="placeholder_episode_name">Нелегальная магия</string>
+    <string name="placeholder_episode_year">2015</string>
+    <string name="placeholder_episode_description">Квентин и Джулия приглашены на тест их волшебных навыков. Квентин проходит и принят в университет Брейкбиллс. Джулия не проходит тест и возвращается к своей обычной жизни, но ей удается сопротивляться стиранию ее памяти. Отказываясь признать, что она не может научиться магии…</string>
+
+</resources>
