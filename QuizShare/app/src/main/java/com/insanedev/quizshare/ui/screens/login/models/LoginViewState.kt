@@ -9,4 +9,5 @@ data class LoginViewState (
     val emailValue: String = "",
     val passwordValue: String = "",
     val fullNameValue: String = "",
+    val isPerforming: Boolean = false
 )

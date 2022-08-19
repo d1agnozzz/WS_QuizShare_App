@@ -2,16 +2,22 @@ package com.insanedev.quizshare.ui.screens.login.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Medium
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,14 +35,24 @@ fun SignInView(
     onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit
 ) {
+    val focusManager =  LocalFocusManager.current
+
     Column {
         QTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
             value = viewState.emailValue,
+            enabled = !viewState.isPerforming,
             placeholder = stringResource(id = R.string.email_hint),
-            onTextFieldChange = onEmailFieldChange
+            onTextFieldChange = onEmailFieldChange,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+            )
         )
         QTextField(
             modifier = Modifier
@@ -44,9 +60,17 @@ fun SignInView(
                 .fillMaxWidth()
                 .height(56.dp),
             value = viewState.passwordValue,
+            enabled = !viewState.isPerforming,
             secureText = true,
             placeholder = stringResource(id = R.string.password_hint),
-            onTextFieldChange = onPasswordFieldChange
+            onTextFieldChange = onPasswordFieldChange,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus()}
+            )
         )
         Text(
             modifier = Modifier
