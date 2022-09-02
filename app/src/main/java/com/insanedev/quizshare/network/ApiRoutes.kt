@@ -1,0 +1,7 @@
+package com.insanedev.quizshare.network
+
+object ApiRoutes {
+    private const val BASE_URL = "http://10.0.2.2:8080"
+    const val REGISTER = "$BASE_URL/register"
+    const val LOGIN = "$BASE_URL/login"
+}

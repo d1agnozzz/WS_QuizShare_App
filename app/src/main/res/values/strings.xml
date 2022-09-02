@@ -4,5 +4,15 @@
     <string name="password_hint">Пароль</string>
     <string name="forget_password_button">Забыли пароль?</string>
     <string name="btn_logIn">Войти</string>
-    <string name="btn_register">Регистрация</string>
+    <string name="btn_toRegistration">Регистрация</string>
+    <string name="first_name_hint">Имя</string>
+    <string name="second_name_hint">Фамилия</string>
+    <string name="patronymic_name_hint">Отчество</string>
+    <string name="repeat_password_hint">Повторите пароль</string>
+    <string name="btn_register">Зарегистрироваться</string>
+    <string name="btn_toLogIn">У меня уже есть аккаунт</string>
+    <string name="requiered_field">*Это обязательное поле</string>
+    <string name="email_not_valid">*Email is not valid</string>
+    <string name="password_too_short">*Пароль должен быть не меньше 4х символов</string>
+    <string name="different_passwords">*Пароли не совпадают</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.insanedev.quizshare.R
+import com.insanedev.quizshare.ui.components.QPasswordField
 import com.insanedev.quizshare.ui.components.QTextField
 import com.insanedev.quizshare.ui.screens.login.models.LoginViewState
 import com.insanedev.quizshare.ui.theme.AppTheme
@@ -28,7 +30,7 @@ fun SignInView(
     onPasswordFieldChange: (String) -> Unit,
     onForgetClick: () -> Unit,
     onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit
+    onRegistrationClick: () -> Unit
 ) {
     val focusManager =  LocalFocusManager.current
 
@@ -48,13 +50,12 @@ fun SignInView(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             )
         )
-        QTextField(
+        QPasswordField(
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = 8.dp)
                 .fillMaxWidth(),
             value = viewState.passwordValue,
             enabled = !viewState.isPerforming,
-            secureText = true,
             label = stringResource(id = R.string.password_hint),
             onTextFieldChange = onPasswordFieldChange,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -67,7 +68,8 @@ fun SignInView(
         )
         Text(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 16.dp, end = 4.dp)
+                .align(Alignment.End)
                 .clickable(onClick = onForgetClick),
             text = stringResource(id = R.string.forget_password_button),
             color = AppTheme.colors.primaryAccent
@@ -92,14 +94,13 @@ fun SignInView(
                 .padding(top = 8.dp)
                 .fillMaxWidth()
                 .height(44.dp),
-            onClick = onRegisterClick,
+            onClick = onRegistrationClick,
             colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = AppTheme.colors.primaryAccent
             )
 
         ) {
-            Text(text = stringResource(id = R.string.btn_register), fontWeight = FontWeight.Medium)
+            Text(text = stringResource(id = R.string.btn_toRegistration), fontWeight = FontWeight.Medium)
         }
     }
-
 }

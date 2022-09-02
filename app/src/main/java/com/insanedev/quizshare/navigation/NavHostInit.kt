@@ -1,9 +1,7 @@
 package com.insanedev.quizshare.ui.screens
 
-import android.window.SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -13,14 +11,29 @@ import com.insanedev.quizshare.ui.screens.login.LoginViewModel
 import com.insanedev.quizshare.ui.screens.splash.SplashScreen
 
 @Composable
-fun ApplicationScreen() {
+fun NavHostInit() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = NavigationTree.Splash.name) {
-        composable(NavigationTree.Splash.name ) { SplashScreen(navController) }
+        composable(NavigationTree.Splash.name ) {
+            SplashScreen {
+                navController.navigate(
+                    NavigationTree.Login.name
+                )
+            }
+        }
         composable(NavigationTree.Login.name) {
             val loginViewModel = hiltViewModel<LoginViewModel>()
-            LoginScreen(loginViewModel = loginViewModel)
+            LoginScreen(loginViewModel = loginViewModel) {
+                navController.navigate(
+                    NavigationTree.Main.name
+                ) {
+                    popUpTo(NavigationTree.Login.name) { inclusive = true }
+                }
+            }
+        }
+        composable(NavigationTree.Main.name) {
+            MainScreen()
         }
         /*...*/
     }
