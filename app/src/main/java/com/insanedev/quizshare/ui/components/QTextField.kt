@@ -1,16 +1,11 @@
 package com.insanedev.quizshare.ui.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -48,21 +43,21 @@ fun QTextField(
         value = value,
         isError = isError,
         label = {
-                Text(
-                    text = label,
-                    style = TextStyle(
-                        color = AppTheme.colors.secondaryText
-                    ),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    letterSpacing = 0.1.sp
-                )
+            Text(
+                text = label,
+                style = TextStyle(
+                    color = AppTheme.colors.secondaryText
+                ),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                letterSpacing = 0.1.sp
+            )
         },
 
         trailingIcon = {
-                       if (isError) {
-                               Icon(Icons.Default.ErrorOutline, contentDescription = "error sign")
-                       }
+            if (isError) {
+                Icon(Icons.Default.ErrorOutline, contentDescription = "error sign")
+            }
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             unfocusedBorderColor = Color(0x0C000000),

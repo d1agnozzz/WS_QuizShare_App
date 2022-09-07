@@ -45,12 +45,13 @@ class ApiServiceImpl(
         val token = response.body<String>()
 
 
-        return try{ when (response.status) {
-            HttpStatusCode.BadRequest -> RegisterResult.EmailIsNotValid
-            HttpStatusCode.Conflict -> RegisterResult.EmailAlreadyExists
-            HttpStatusCode.OK -> RegisterResult.Ok(token)
-            else -> RegisterResult.SomethingWentWrong
-        }
+        return try {
+            when (response.status) {
+                HttpStatusCode.BadRequest -> RegisterResult.EmailIsNotValid
+                HttpStatusCode.Conflict -> RegisterResult.EmailAlreadyExists
+                HttpStatusCode.OK -> RegisterResult.Ok(token)
+                else -> RegisterResult.SomethingWentWrong
+            }
         } catch (e: Exception) {
             RegisterResult.SomethingWentWrong
         }

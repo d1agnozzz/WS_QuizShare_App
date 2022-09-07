@@ -21,7 +21,7 @@ fun LoginScreen(
     loginViewModel: LoginViewModel,
     onLoginPassed: () -> Unit
 ) {
-    
+
     val viewState = loginViewModel.viewState.observeAsState(LoginViewState())
 
     with(viewState.value) {
@@ -86,9 +86,9 @@ fun LoginScreen(
             }
         }
     }
-    
-    LaunchedEffect(key1 = viewState.value.isLoginPassed){
-        when(viewState.value.isLoginPassed) {
+
+    LaunchedEffect(key1 = viewState.value.isLoginPassed) {
+        when (viewState.value.isLoginPassed) {
             true -> onLoginPassed.invoke()
             false -> Unit
         }

@@ -15,7 +15,7 @@ fun NavHostInit() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = NavigationTree.Main.name) {
-        composable(NavigationTree.Splash.name ) {
+        composable(NavigationTree.Splash.name) {
             SplashScreen {
                 navController.navigate(
                     NavigationTree.Login.name

@@ -15,8 +15,8 @@ import com.insanedev.quizshare.R
 import com.insanedev.quizshare.ui.theme.AppTheme
 
 @Composable
-fun SplashScreen(onSplashLaunched: () -> Unit){
-    
+fun SplashScreen(onSplashLaunched: () -> Unit) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +28,7 @@ fun SplashScreen(onSplashLaunched: () -> Unit){
             modifier = Modifier.align(Alignment.Center)
         )
     }
-    
+
     LaunchedEffect(key1 = Unit, block = {
         onSplashLaunched.invoke()
     })
