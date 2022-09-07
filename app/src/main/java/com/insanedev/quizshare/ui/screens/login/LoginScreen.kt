@@ -21,12 +21,6 @@ fun LoginScreen(
     loginViewModel: LoginViewModel,
     onLoginPassed: () -> Unit
 ) {
-
-    // Close on back button pressed
-//    val activity = (LocalContext.current as Activity)
-//    BackHandler {
-//        activity.finish()
-//    }
     
     val viewState = loginViewModel.viewState.observeAsState(LoginViewState())
 

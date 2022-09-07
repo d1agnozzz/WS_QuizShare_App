@@ -15,4 +15,7 @@
     <string name="email_not_valid">*Email is not valid</string>
     <string name="password_too_short">*Пароль должен быть не меньше 4х символов</string>
     <string name="different_passwords">*Пароли не совпадают</string>
+    <string name="init_helper">" "</string>
+    <string name="quizzes_passed">Тестов пройдено</string>
+    <string name="correctness_percentage">% правильных ответов</string>
 </resources>
