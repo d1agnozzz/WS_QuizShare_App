@@ -14,12 +14,14 @@ import com.insanedev.quizshare.ui.screens.splash.SplashScreen
 fun NavHostInit() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = NavigationTree.Splash.name) {
+    NavHost(navController = navController, startDestination = NavigationTree.Main.name) {
         composable(NavigationTree.Splash.name ) {
             SplashScreen {
                 navController.navigate(
                     NavigationTree.Login.name
-                )
+                ) {
+                    popUpTo(0)
+                }
             }
         }
         composable(NavigationTree.Login.name) {
@@ -28,7 +30,7 @@ fun NavHostInit() {
                 navController.navigate(
                     NavigationTree.Main.name
                 ) {
-                    popUpTo(NavigationTree.Login.name) { inclusive = true }
+                    popUpTo(0)
                 }
             }
         }

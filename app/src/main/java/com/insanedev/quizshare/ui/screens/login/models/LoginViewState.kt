@@ -8,18 +8,18 @@ data class LoginViewState(
     val loginSubState: LoginSubState = LoginSubState.SignIn,
 
     val firstNameValue: String = "",
-    val firstNameHelperText: String = "",
+    val firstNameHelperTextId: Int? = null,
     val secondNameValue: String = "",
-    val secondNameHelperText: String = "",
+    val secondNameHelperTextId: Int? = null,
     val patronymicNameValue: String = "",
 
     val emailValue: String = "",
-    val emailHelperText: String = "",
+    val emailHelperTextId: Int? = null,
 
     val passwordValue: String = "",
-    val passwordHelperText: String = "",
+    val passwordHelperTextId: Int? = null,
     val passwordRepeatValue: String = "",
-    val passwordRepeatHelperText: String = "",
+    val passwordRepeatHelperTextId: Int? = null,
 
     val isPerforming: Boolean = false,
     val isLoginPassed: Boolean = false,

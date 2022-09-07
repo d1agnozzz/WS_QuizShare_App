@@ -1,7 +1,5 @@
 package com.insanedev.quizshare.ui.screens.login
 
-import android.app.Activity
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +9,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.insanedev.quizshare.ui.screens.login.models.LoginEvent
 import com.insanedev.quizshare.ui.screens.login.models.LoginSubState
@@ -26,10 +23,10 @@ fun LoginScreen(
 ) {
 
     // Close on back button pressed
-    val activity = (LocalContext.current as Activity)
-    BackHandler {
-        activity.finish()
-    }
+//    val activity = (LocalContext.current as Activity)
+//    BackHandler {
+//        activity.finish()
+//    }
     
     val viewState = loginViewModel.viewState.observeAsState(LoginViewState())
 

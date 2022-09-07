@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
@@ -44,7 +43,7 @@ fun SignUpView(
 ) {
     val focusManager = LocalFocusManager.current
 
-    with (viewState) {
+    with(viewState) {
         Column {
             // First
             QTextField(
@@ -52,7 +51,7 @@ fun SignUpView(
                     .fillMaxWidth(),
                 value = viewState.firstNameValue,
                 enabled = !viewState.isPerforming,
-                isError = !firstNameHelperText.isEmpty(),
+                isError = firstNameHelperTextId != null,
                 errorText = "Это обязательное поле",
                 label = stringResource(id = R.string.first_name_hint),
                 onTextFieldChange = onFirstNameFieldChange,
@@ -65,7 +64,7 @@ fun SignUpView(
                 )
             )
             Text(
-                text =firstNameHelperText,
+                text = firstNameHelperTextId?.let { stringResource(id = it) } ?: "",
 //            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -82,7 +81,7 @@ fun SignUpView(
                     .fillMaxWidth(),
                 value = viewState.secondNameValue,
                 enabled = !viewState.isPerforming,
-                isError = !secondNameHelperText.isEmpty(),
+                isError = secondNameHelperTextId != null,
                 label = stringResource(id = R.string.second_name_hint),
                 onTextFieldChange = onSecondNameFieldChange,
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -94,7 +93,7 @@ fun SignUpView(
                 )
             )
             Text(
-                text = secondNameHelperText,
+                text = secondNameHelperTextId?.let { stringResource(id = it) } ?: "",
 //            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -135,7 +134,7 @@ fun SignUpView(
                     .fillMaxWidth(),
                 value = viewState.emailValue,
                 enabled = !viewState.isPerforming,
-                isError = !emailHelperText.isEmpty(),
+                isError = emailHelperTextId != null,
                 label = stringResource(id = R.string.email_hint),
                 onTextFieldChange = onEmailFieldChange,
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -147,7 +146,7 @@ fun SignUpView(
                 )
             )
             Text(
-                text = emailHelperText,
+                text = emailHelperTextId?.let { stringResource(id = it) } ?: "",
 //            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -163,7 +162,7 @@ fun SignUpView(
                 value = viewState.passwordValue,
                 onTextFieldChange = onPasswordFieldChange,
                 enabled = !viewState.isPerforming,
-                isError = !passwordHelperText.isEmpty(),
+                isError = passwordHelperTextId != null,
                 label = stringResource(id = R.string.password_hint),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Password,
@@ -174,7 +173,7 @@ fun SignUpView(
                 )
             )
             Text(
-                text = passwordHelperText,
+                text = passwordHelperTextId?.let { stringResource(id = it) } ?: "",
 //            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
                 style = TextStyle(
                     fontSize = 12.sp,
@@ -190,7 +189,7 @@ fun SignUpView(
                 value = viewState.passwordRepeatValue,
                 onTextFieldChange = onPasswordRepeatFieldChange,
                 enabled = !viewState.isPerforming,
-                isError = !passwordRepeatHelperText.isEmpty(),
+                isError = passwordRepeatHelperTextId != null,
                 label = stringResource(id = R.string.repeat_password_hint),
                 showPasswordIcon = false,
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -202,7 +201,7 @@ fun SignUpView(
                 )
             )
             Text(
-                text = passwordRepeatHelperText,
+                text = passwordRepeatHelperTextId?.let { stringResource(id = it) } ?: "",
                 style = TextStyle(
                     fontSize = 12.sp,
                     letterSpacing = 0.4.sp
@@ -220,7 +219,7 @@ fun SignUpView(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = AppTheme.colors.primaryAccent,
                     contentColor = Color.White
-                )
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.btn_register),

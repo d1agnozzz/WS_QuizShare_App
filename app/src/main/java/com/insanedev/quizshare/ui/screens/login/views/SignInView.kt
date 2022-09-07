@@ -32,7 +32,7 @@ fun SignInView(
     onLoginClick: () -> Unit,
     onRegistrationClick: () -> Unit
 ) {
-    val focusManager =  LocalFocusManager.current
+    val focusManager = LocalFocusManager.current
 
     Column {
         QTextField(
@@ -63,7 +63,7 @@ fun SignInView(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = { focusManager.clearFocus()}
+                onDone = { focusManager.clearFocus() }
             )
         )
         Text(
@@ -87,7 +87,18 @@ fun SignInView(
                 contentColor = Color.White
             )
         ) {
-            Text(text = stringResource(id = R.string.btn_logIn), fontWeight = FontWeight.Medium, fontSize = 14.sp)
+            when (viewState.isPerforming) {
+                false -> Text(
+                    text = stringResource(id = R.string.btn_logIn),
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp
+                )
+                true -> CircularProgressIndicator(
+                    color = Color.White,
+                    strokeWidth = 4.dp,
+                    modifier = Modifier.size(28.dp)
+                )
+            }
         }
         OutlinedButton(
             modifier = Modifier
@@ -100,7 +111,10 @@ fun SignInView(
             )
 
         ) {
-            Text(text = stringResource(id = R.string.btn_toRegistration), fontWeight = FontWeight.Medium)
+            Text(
+                text = stringResource(id = R.string.btn_toRegistration),
+                fontWeight = FontWeight.Medium
+            )
         }
     }
 }

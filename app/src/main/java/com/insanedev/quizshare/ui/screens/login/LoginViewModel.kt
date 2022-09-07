@@ -2,17 +2,13 @@ package com.insanedev.quizshare.ui.screens.login
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.insanedev.quizshare.R
+import androidx.lifecycle.*
 import com.insanedev.quizshare.common.EventHandler
-import com.insanedev.quizshare.common.validateEmail
 import com.insanedev.quizshare.network.ApiService
 import com.insanedev.quizshare.ui.screens.login.models.LoginEvent
 import com.insanedev.quizshare.ui.screens.login.models.LoginSubState
 import com.insanedev.quizshare.ui.screens.login.models.LoginViewState
+import com.insanedev.quizshare.ui.screens.login.models.RegisterValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -24,6 +20,10 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     EventHandler<LoginEvent> {
     private val _viewState = MutableLiveData(LoginViewState())
     val viewState: LiveData<LoginViewState> = _viewState
+
+    val allValid = MediatorLiveData<Boolean>()
+
+
 
     val context = getApplication<Application>()
 
@@ -56,94 +56,33 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     }
 
     private fun performRegister() {
-        var validated = true
 
-        var firstNameMessage = ""
-        var secondNameMessage = ""
-        var emailMessage = ""
-        var passwordMessage = ""
-        var passwordRepeatMessage = ""
-
-        // First name validation
-        when (_viewState.value?.firstNameValue) {
-            "" -> {
-                firstNameMessage = context.getString(R.string.requiered_field)
-                validated = false
-            }
-            else -> firstNameMessage = ""
-
-        }
-        // Second name validation
-        when (_viewState.value?.secondNameValue) {
-            "" -> {
-                secondNameMessage = context.getString(R.string.requiered_field)
-                validated = false
-            }
-            else -> firstNameMessage = ""
-
-        }
-        // Email validation
-        when {
-            _viewState.value?.emailValue!!.isEmpty() -> {
-                emailMessage = context.getString(R.string.requiered_field)
-                validated = false
-            }
-            !validateEmail(_viewState.value!!.emailValue) -> {
-                emailMessage = context.getString(R.string.email_not_valid)
-                validated = false
-
-            }
-            else -> emailMessage = ""
-        }
-        // Password validation
-        when {
-            _viewState.value?.passwordValue!!.isEmpty() -> {
-                passwordMessage = context.getString(R.string.requiered_field)
-                validated = false
-            }
-            _viewState.value?.passwordValue!!.length < 4 -> {
-                passwordMessage = context.getString(R.string.password_too_short)
-                validated = false
-
-            }
-            else -> passwordMessage = ""
-        }
-        // Repeat password validation
-        when {
-            _viewState.value?.passwordRepeatValue!!.isEmpty() -> {
-                passwordRepeatMessage = context.getString(R.string.requiered_field)
-                validated = false
-            }
-            _viewState.value?.passwordRepeatValue != _viewState.value?.passwordValue -> {
-                passwordRepeatMessage = context.getString(R.string.different_passwords)
-                validated = false
-
-            }
-            else -> passwordRepeatMessage = ""
+        with (_viewState.value) {
+//            TODO()
+             if (this?.firstNameHelperTextId != null && this?.secondNameHelperTextId != null &&
+                    this?.emailHelperTextId != null && this?.passwordHelperTextId != null &&
+                    this?.passwordRepeatHelperTextId != null) {
+                 firstNameChanged(_viewState.value!!.firstNameValue)
+                 secondNameChanged(_viewState.value!!.secondNameValue)
+                 emailChanged(_viewState.value!!.emailValue)
+                 passwordChanged(_viewState.value!!.passwordValue)
+                 passwordRepeatChanged(_viewState.value!!.passwordRepeatValue)
+             } else {
+                 Log.d("performRegister", "Fields validated, registration performs")
+                 return
+                 viewModelScope.launch {
+                     apiService.tryRegister(
+                         email = _viewState.value!!.emailValue,
+                         password = _viewState.value!!.passwordValue,
+                         name = _viewState.value!!.firstNameValue,
+                         secondName = _viewState.value!!.secondNameValue,
+                         patronymicName = _viewState.value!!.patronymicNameValue
+                     )
+                 }
+             }
         }
 
-        _viewState.postValue(_viewState.value?.copy(
-            firstNameHelperText = firstNameMessage,
-            secondNameHelperText = secondNameMessage,
-            emailHelperText = emailMessage,
-            passwordHelperText = passwordMessage,
-            passwordRepeatHelperText = passwordRepeatMessage
-        ))
 
-        // Quit
-        if (!validated)
-            return
-
-
-        viewModelScope.launch {
-            apiService.tryRegister(
-                email = _viewState.value!!.emailValue,
-                password = _viewState.value!!.passwordValue,
-                name = _viewState.value!!.firstNameValue,
-                secondName = _viewState.value!!.secondNameValue,
-                patronymicName = _viewState.value!!.patronymicNameValue
-            )
-        }
     }
 
     private fun loginClicked() {
@@ -178,11 +117,13 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     }
 
     private fun firstNameChanged(value: String) {
-        _viewState.postValue(_viewState.value?.copy(firstNameValue = value))
+        val errorId = RegisterValidator.getNameErrorIdOrNull(value)
+        _viewState.postValue(_viewState.value?.copy(firstNameValue = value, firstNameHelperTextId = errorId))
     }
 
     private fun secondNameChanged(value: String) {
-        _viewState.postValue(_viewState.value?.copy(secondNameValue = value))
+        val errorId = RegisterValidator.getNameErrorIdOrNull(value)
+        _viewState.postValue(_viewState.value?.copy(secondNameValue = value, secondNameHelperTextId = errorId))
     }
 
     private fun patronymicNameChanged(value: String) {
@@ -190,15 +131,25 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     }
 
     private fun emailChanged(value: String) {
-        _viewState.postValue(_viewState.value?.copy(emailValue = value))
+        val errorId = RegisterValidator.getEmailErrorIdOrNull(value)
+
+        _viewState.postValue(_viewState.value?.copy(emailValue = value, emailHelperTextId = errorId))
         Log.d("LogInViewModel", "Email Posted")
     }
 
     private fun passwordChanged(value: String) {
-        _viewState.postValue(_viewState.value?.copy(passwordValue = value))
+        val errorId = RegisterValidator.getPasswordErrorIdOrNull(value)
+        val errorIdRepeat  = RegisterValidator.getPasswordRepeatErrorIdOrNull(_viewState.value!!.passwordRepeatValue, value)
+
+        _viewState.postValue(_viewState.value?.copy(
+            passwordValue = value, passwordHelperTextId = errorId,
+            passwordRepeatHelperTextId = errorIdRepeat
+        ))
     }
 
     private fun passwordRepeatChanged(value: String) {
-        _viewState.postValue(_viewState.value?.copy(passwordRepeatValue = value))
+        val errorId = RegisterValidator.getPasswordRepeatErrorIdOrNull(value, _viewState.value!!.passwordValue)
+
+        _viewState.postValue(_viewState.value?.copy(passwordRepeatValue = value, passwordRepeatHelperTextId = errorId))
     }
 }
