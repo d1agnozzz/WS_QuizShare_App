@@ -5,6 +5,7 @@ import com.insanedev.quizshare.common.LoginResult
 import com.insanedev.quizshare.common.RegisterResult
 import com.insanedev.quizshare.network.models.LoginReceiveRemote
 import com.insanedev.quizshare.network.models.RegisterReceiveRemote
+import com.insanedev.quizshare.network.models.RegisterResponseRemote
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -42,14 +43,13 @@ class ApiServiceImpl(
             contentType(ContentType.Application.Json)
             setBody(RegisterReceiveRemote(email, name, secondName, patronymicName ?: "", password))
         }
-        val token = response.body<String>()
 
 
         return try {
             when (response.status) {
                 HttpStatusCode.BadRequest -> RegisterResult.EmailIsNotValid
                 HttpStatusCode.Conflict -> RegisterResult.EmailAlreadyExists
-                HttpStatusCode.OK -> RegisterResult.Ok(token)
+                HttpStatusCode.OK -> RegisterResult.Ok(response.body<RegisterResponseRemote>().token)
                 else -> RegisterResult.SomethingWentWrong
             }
         } catch (e: Exception) {

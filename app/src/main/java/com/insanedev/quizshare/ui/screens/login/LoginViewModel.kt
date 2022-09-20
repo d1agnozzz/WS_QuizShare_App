@@ -2,7 +2,10 @@ package com.insanedev.quizshare.ui.screens.login
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.insanedev.quizshare.common.EventHandler
 import com.insanedev.quizshare.network.ApiService
 import com.insanedev.quizshare.ui.screens.login.models.LoginEvent
@@ -21,10 +24,10 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     private val _viewState = MutableLiveData(LoginViewState())
     val viewState: LiveData<LoginViewState> = _viewState
 
-    val allValid = MediatorLiveData<Boolean>()
+    // val allValid = MediatorLiveData<Boolean>()
 
 
-    val context = getApplication<Application>()
+    // val context = getApplication<Application>()
 
     override fun obtainEvent(event: LoginEvent) {
         when (event) {
@@ -69,7 +72,6 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
                 passwordRepeatChanged(_viewState.value!!.passwordRepeatValue)
             } else {
                 Log.d("performRegister", "Fields validated, registration performs")
-                return
                 viewModelScope.launch {
                     apiService.tryRegister(
                         email = _viewState.value!!.emailValue,

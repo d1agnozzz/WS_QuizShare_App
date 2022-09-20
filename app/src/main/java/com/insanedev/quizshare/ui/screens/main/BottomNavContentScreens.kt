@@ -2,25 +2,30 @@ package com.insanedev.quizshare.ui.screens.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.insanedev.quizshare.R
+import com.insanedev.quizshare.ui.components.CircleWithIcon
+import com.insanedev.quizshare.ui.components.GroupCard
 import com.insanedev.quizshare.ui.components.StatisticCircle
+import com.insanedev.quizshare.ui.theme.AppTheme
 
 @Composable
 fun ProfileScreen() {
@@ -97,17 +102,44 @@ fun ProfileScreen() {
 @Composable
 fun GroupsScreen() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Groups Screen",
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
+        LazyColumn(Modifier.weight(1f)) {
+            item {
+                GroupCard(groupTitle = "MTUCI_BVT2003", usersRank = 2, totalRank = 28) {
+
+                }
+            }
+        }
+        Row {
+            FilledTonalButton(
+                colors = ButtonDefaults.filledTonalButtonColors(
+                    containerColor = AppTheme.colors.primaryAccent
+                ),
+                modifier = Modifier.width(128.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.join_group),
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedButton(
+                modifier = Modifier.width(128.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "",
+                    tint = AppTheme.colors.secondaryText
+                )
+                Text(
+                    text = stringResource(id = R.string.create_group),
+                    color = AppTheme.colors.secondaryText
+                )
+            }
+        }
     }
 }
 
@@ -116,14 +148,50 @@ fun QuizzesScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
     ) {
-        Text(
-            text = "Quizzes Screen",
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
+       LazyColumn {
+           item{
+               ElevatedCard(
+                   modifier = Modifier
+                       .height(96.dp)
+                       .padding(4.dp)
+                       .fillMaxWidth(),
+                   elevation = CardDefaults.cardElevation(8.dp),
+                   colors = CardDefaults.cardColors(containerColor = Color.White)
+               ) {
+                   Row(
+                       modifier = Modifier.padding(16.dp),
+                       verticalAlignment = Alignment.CenterVertically
+                   ) {
+                       CircleWithIcon(
+                           imageVector = Icons.Rounded.CheckCircleOutline,
+                           modifier = Modifier.height(50.dp)
+                       )
+                       Spacer(modifier = Modifier.width(16.dp))
+                       Column(
+                           modifier = Modifier.fillMaxHeight(),
+                           verticalArrangement = Arrangement.SpaceEvenly
+                       ) {
+                           Text(
+                               text = "Тест 1",
+                               fontSize = 16.sp,
+                               fontWeight = FontWeight.Medium
+                           )
+                           Text(
+                               text = "Результат: 13/15",
+                               fontSize = 14.sp,
+                               fontWeight = FontWeight.Normal
+                           )
+                       }
+                       Spacer(modifier = Modifier.weight(1f))
+                       Text(
+                           text = "MTUCI_BVT2002",
+                           fontSize = 14.sp,
+                           color = AppTheme.colors.primaryAccent
+                       )
+                   }
+               }
+           }
+       }
     }
 }

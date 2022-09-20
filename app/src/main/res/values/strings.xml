@@ -18,4 +18,6 @@
     <string name="init_helper">" "</string>
     <string name="quizzes_passed">Тестов пройдено</string>
     <string name="correctness_percentage">% правильных ответов</string>
+    <string name="join_group">Вступить</string>
+    <string name="create_group">Создать</string>
 </resources>

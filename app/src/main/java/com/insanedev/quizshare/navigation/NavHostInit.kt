@@ -14,7 +14,9 @@ import com.insanedev.quizshare.ui.screens.splash.SplashScreen
 fun NavHostInit() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = NavigationTree.Main.name) {
+    NavHost(navController = navController, startDestination = NavigationTree.Main.name)
+
+    {
         composable(NavigationTree.Splash.name) {
             SplashScreen {
                 navController.navigate(
