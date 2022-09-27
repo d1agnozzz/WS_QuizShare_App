@@ -39,7 +39,7 @@ fun StatisticCircle(
         )
         Text(
             text = innerContent,
-            fontSize = 48.sp,
+            fontSize = (size.value/2.5).sp,
             fontWeight = FontWeight.Medium,
             modifier = Modifier.align(Alignment.Center)
         )

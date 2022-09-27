@@ -1,3 +1,4 @@
+
 package com.insanedev.quizshare.ui.screens.main
 
 import androidx.compose.foundation.Image
@@ -6,9 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,13 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.insanedev.quizshare.R
-import com.insanedev.quizshare.ui.components.CircleWithIcon
-import com.insanedev.quizshare.ui.components.GroupCard
-import com.insanedev.quizshare.ui.components.StatisticCircle
+import com.insanedev.quizshare.ui.components.*
 import com.insanedev.quizshare.ui.theme.AppTheme
 
 @Composable
@@ -107,7 +105,6 @@ fun GroupsScreen() {
         LazyColumn(Modifier.weight(1f)) {
             item {
                 GroupCard(groupTitle = "MTUCI_BVT2003", usersRank = 2, totalRank = 28) {
-
                 }
             }
         }
@@ -147,51 +144,50 @@ fun GroupsScreen() {
 fun QuizzesScreen() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-       LazyColumn {
-           item{
-               ElevatedCard(
-                   modifier = Modifier
-                       .height(96.dp)
-                       .padding(4.dp)
-                       .fillMaxWidth(),
-                   elevation = CardDefaults.cardElevation(8.dp),
-                   colors = CardDefaults.cardColors(containerColor = Color.White)
-               ) {
-                   Row(
-                       modifier = Modifier.padding(16.dp),
-                       verticalAlignment = Alignment.CenterVertically
-                   ) {
-                       CircleWithIcon(
-                           imageVector = Icons.Rounded.CheckCircleOutline,
-                           modifier = Modifier.height(50.dp)
-                       )
-                       Spacer(modifier = Modifier.width(16.dp))
-                       Column(
-                           modifier = Modifier.fillMaxHeight(),
-                           verticalArrangement = Arrangement.SpaceEvenly
-                       ) {
-                           Text(
-                               text = "Тест 1",
-                               fontSize = 16.sp,
-                               fontWeight = FontWeight.Medium
-                           )
-                           Text(
-                               text = "Результат: 13/15",
-                               fontSize = 14.sp,
-                               fontWeight = FontWeight.Normal
-                           )
-                       }
-                       Spacer(modifier = Modifier.weight(1f))
-                       Text(
-                           text = "MTUCI_BVT2002",
-                           fontSize = 14.sp,
-                           color = AppTheme.colors.primaryAccent
-                       )
-                   }
-               }
+       LazyColumn(modifier = Modifier.weight(1f)) {
+           item {
+               QuizCardCompleted(title = "Test", group = "Test", quizType = QuizType.Quiz)
+           }
+           item {
+               QuizCardInProgress(title = "Test2", group = "Test2", answeredQuestions = 15, totalQuestions = 27)
            }
        }
+        Row {
+            FilledTonalButton(
+                colors = ButtonDefaults.filledTonalButtonColors(
+                    containerColor = AppTheme.colors.primaryAccent
+                ),
+//                modifier = Modifier.width(128.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(
+                    Icons.Default.Link,
+                    contentDescription = "Join",
+                    tint = Color.White
+                )
+                Text(
+                    text = stringResource(id = R.string.join_quiz),
+                    color = Color.White
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            OutlinedButton(
+//                modifier = Modifier.width(128.dp),
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "",
+                    tint = AppTheme.colors.secondaryText
+                )
+                Text(
+                    text = stringResource(id = R.string.create_quiz),
+                    color = AppTheme.colors.secondaryText
+                )
+            }
+        }
     }
 }

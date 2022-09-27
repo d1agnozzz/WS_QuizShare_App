@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.insanedev.quizshare.ui.screens.main.BottomNavigationComposable
+import com.insanedev.quizshare.ui.components.BottomNavigationComposable
 import com.insanedev.quizshare.ui.screens.main.NavigationGraph
 
 @OptIn(ExperimentalMaterial3Api::class)

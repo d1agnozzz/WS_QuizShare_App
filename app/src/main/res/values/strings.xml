@@ -20,4 +20,9 @@
     <string name="correctness_percentage">% правильных ответов</string>
     <string name="join_group">Вступить</string>
     <string name="create_group">Создать</string>
+    <string name="join_quiz">Присоединиться</string>
+    <string name="create_quiz">Создать</string>
+    <string name="result">"Результат: "</string>
+    <string name="not_rating_quiz">Не рейтинговый опрос</string>
+    <string name="total_questions">"Вопросов: "</string>
 </resources>

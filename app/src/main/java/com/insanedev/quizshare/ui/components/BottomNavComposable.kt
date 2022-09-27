@@ -1,4 +1,4 @@
-package com.insanedev.quizshare.ui.screens.main
+package com.insanedev.quizshare.ui.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
