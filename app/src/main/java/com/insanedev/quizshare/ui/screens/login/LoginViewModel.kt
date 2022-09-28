@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.insanedev.quizshare.common.EventHandler
+import com.insanedev.quizshare.data.Token
+import com.insanedev.quizshare.data.tokenStore
 import com.insanedev.quizshare.network.ApiService
 import com.insanedev.quizshare.ui.screens.login.models.LoginEvent
 import com.insanedev.quizshare.ui.screens.login.models.LoginSubState
@@ -15,14 +17,30 @@ import com.insanedev.quizshare.ui.screens.login.models.RegisterValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
+
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(application: Application) : AndroidViewModel(application),
     EventHandler<LoginEvent> {
     private val _viewState = MutableLiveData(LoginViewState())
     val viewState: LiveData<LoginViewState> = _viewState
+
+    val context = application.applicationContext
+
+    val tokenFlow: Flow<Token> = context.tokenStore.data.catch { exception ->
+        if (exception is IOException) {
+            Log.e("E", "Error reading sort order preferences.", exception)
+            emit(Token.getDefaultInstance())
+        } else {
+            throw exception
+        }
+    }
 
     // val allValid = MediatorLiveData<Boolean>()
 
@@ -41,6 +59,12 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
             is LoginEvent.ForgetClicked -> forgetClicked()
             is LoginEvent.LoginClicked -> loginClicked()
             is LoginEvent.RegistrationClicked -> registrationClicked()
+        }
+    }
+
+    private suspend fun updateToken(token: String) {
+        context.tokenStore.updateData { currentToken ->
+            currentToken.toBuilder().setToken(token).build()
         }
     }
 

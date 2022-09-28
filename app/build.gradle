@@ -102,7 +102,7 @@ dependencies {
     implementation "io.ktor:ktor-client-android:$ktor_version"
     implementation "io.ktor:ktor-client-okhttp:$ktor_version"
 
-    implementation  "androidx.datastore:datastore-core:1.0.0"
+    implementation  "androidx.datastore:datastore:1.0.0"
     implementation  "com.google.protobuf:protobuf-javalite:3.18.0"
 
 //    implementation("com.google.protobuf:protobuf-javalite:3.21.5")

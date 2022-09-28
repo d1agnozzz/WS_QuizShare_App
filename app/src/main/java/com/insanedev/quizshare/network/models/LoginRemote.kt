@@ -3,7 +3,7 @@ package com.insanedev.quizshare.network.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginReceiveRemote(
+data class LoginRequestRemote(
     val email: String,
     val password: String
 )

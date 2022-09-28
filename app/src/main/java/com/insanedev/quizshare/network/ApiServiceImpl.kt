@@ -1,11 +1,10 @@
 package com.insanedev.quizshare.network
 
 
+import com.insanedev.quizshare.common.AuthResult
 import com.insanedev.quizshare.common.LoginResult
 import com.insanedev.quizshare.common.RegisterResult
-import com.insanedev.quizshare.network.models.LoginReceiveRemote
-import com.insanedev.quizshare.network.models.RegisterReceiveRemote
-import com.insanedev.quizshare.network.models.RegisterResponseRemote
+import com.insanedev.quizshare.network.models.*
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -20,7 +19,7 @@ class ApiServiceImpl(
         val response = client.post {
             url(ApiRoutes.LOGIN)
             contentType(ContentType.Application.Json)
-            setBody(LoginReceiveRemote(email, password))
+            setBody(LoginRequestRemote(email, password))
         }
         val token = response.body<String>()
 
@@ -41,7 +40,7 @@ class ApiServiceImpl(
         val response = client.post {
             url(ApiRoutes.REGISTER)
             contentType(ContentType.Application.Json)
-            setBody(RegisterReceiveRemote(email, name, secondName, patronymicName ?: "", password))
+            setBody(RegisterRequestRemote(email, name, secondName, patronymicName ?: "", password))
         }
 
 
@@ -55,21 +54,22 @@ class ApiServiceImpl(
         } catch (e: Exception) {
             RegisterResult.SomethingWentWrong
         }
-//
-//        return try {
-//            RegisterResult.Ok(token)
-//        } catch (ex: RedirectResponseException) {
-//            // 3xx - responses
-//            println("Error: ${ex.response.status.description}")
-//            RegisterResult.SomethingWentWrong
-//        } catch (ex: ClientRequestException) {
-//            // 4xx - responses
-//            println("Error: ${ex.response.status.description}")
-//            RegisterResult.SomethingWentWrong
-//        } catch (ex: ServerResponseException) {
-//            // 5xx - response
-//            println("Error: ${ex.response.status.description}")
-//            RegisterResult.SomethingWentWrong
-//        }
+    }
+
+    override suspend fun tryAuth(token: String): AuthResult {
+        val response = client.post {
+            url(ApiRoutes.AUTH)
+            contentType(ContentType.Application.Json)
+            setBody(AuthRequestRemote(token))
+        }
+
+        return try {
+            when (response.status){
+                HttpStatusCode.OK -> AuthResult.Ok(response.body<AuthResponseRemote>().email)
+                else -> AuthResult.Err
+            }
+        } catch (e: Exception) {
+            AuthResult.Err
+        }
     }
 }

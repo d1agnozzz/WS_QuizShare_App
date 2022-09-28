@@ -1,5 +1,6 @@
 package com.insanedev.quizshare.network
 
+import com.insanedev.quizshare.common.AuthResult
 import com.insanedev.quizshare.common.LoginResult
 import com.insanedev.quizshare.common.RegisterResult
 import io.ktor.client.*
@@ -22,6 +23,8 @@ interface ApiService {
         secondName: String,
         patronymicName: String?
     ): RegisterResult
+
+    suspend fun tryAuth(token: String) : AuthResult
 
     companion object {
         fun create(): ApiService {

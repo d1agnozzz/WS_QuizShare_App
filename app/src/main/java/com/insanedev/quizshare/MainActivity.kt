@@ -10,6 +10,9 @@ import com.insanedev.quizshare.ui.theme.QuizShareTheme
 import com.insanedev.quizshare.ui.theme.lightPalette
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +32,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-
 
 
 

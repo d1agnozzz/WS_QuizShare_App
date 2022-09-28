@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option java_package = "com.example.application";
+option java_package = "com.insanedev.quizshare.data";
 option java_multiple_files = true;
 
 message Token {
-  string   example_counter = 1;
+  string   token = 1;
 }
