@@ -17,7 +17,7 @@ import com.insanedev.quizshare.ui.screens.splash.SplashViewModel
 fun NavHostInit() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = NavigationTree.Main.name)
+    NavHost(navController = navController, startDestination = NavigationTree.Splash.name)
 
     {
         composable(NavigationTree.Splash.name) {
@@ -38,13 +38,14 @@ fun NavHostInit() {
         }
         composable(NavigationTree.Login.name) {
             val loginViewModel = hiltViewModel<LoginViewModel>()
-            LoginScreen(loginViewModel = loginViewModel) {
+            LoginScreen(loginViewModel = loginViewModel, onLoginPassed = {
                 navController.navigate(
                     NavigationTree.Main.name
                 ) {
                     popUpTo(0)
                 }
             }
+            )
         }
         composable(
             route = "${NavigationTree.Main.name}/email",

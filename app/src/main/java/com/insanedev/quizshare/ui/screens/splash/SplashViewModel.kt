@@ -20,6 +20,10 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(application: Application) : AndroidViewModel(application),
     EventHandler<LoginEvent> {
 
+    private val apiService by lazy {
+        ApiService.create()
+    }
+
     init {
         checkToken()
     }
@@ -55,9 +59,7 @@ class SplashViewModel @Inject constructor(application: Application) : AndroidVie
         }
     }
 
-    private val apiService by lazy {
-        ApiService.create()
-    }
+
 
     private fun checkToken() {
         viewModelScope.launch(Dispatchers.IO) {

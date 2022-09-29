@@ -4,6 +4,10 @@ enum class LoginSubState {
     SignIn, SignUp
 }
 
+sealed class LoginAction{
+    object None : LoginAction()
+}
+
 data class LoginViewState(
     val loginSubState: LoginSubState = LoginSubState.SignIn,
 
