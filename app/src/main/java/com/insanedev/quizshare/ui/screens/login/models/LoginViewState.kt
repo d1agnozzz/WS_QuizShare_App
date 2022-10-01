@@ -6,10 +6,12 @@ enum class LoginSubState {
 
 sealed class LoginAction{
     object None : LoginAction()
+    data class OpenMainScreen(val email: String) : LoginAction()
 }
 
 data class LoginViewState(
     val loginSubState: LoginSubState = LoginSubState.SignIn,
+    val loginAction: LoginAction = LoginAction.None,
 
     val firstNameValue: String = "",
     val firstNameHelperTextId: Int? = null,

@@ -12,7 +12,7 @@
     <string name="btn_register">Зарегистрироваться</string>
     <string name="btn_toLogIn">У меня уже есть аккаунт</string>
     <string name="requiered_field">*Это обязательное поле</string>
-    <string name="email_not_valid">*Email is not valid</string>
+    <string name="email_not_valid">*Неправильный формат email</string>
     <string name="password_too_short">*Пароль должен быть не меньше 4х символов</string>
     <string name="different_passwords">*Пароли не совпадают</string>
     <string name="init_helper">" "</string>
@@ -25,4 +25,10 @@
     <string name="result">"Результат: "</string>
     <string name="not_rating_quiz">Не рейтинговый опрос</string>
     <string name="total_questions">"Вопросов: "</string>
+    <string name="email_already_exists">Такой email уже занят</string>
+    <string name="incorrect_credentials">Неверный email или пароль</string>
+    <string name="quiz_creation">Создание теста</string>
+    <string name="quiz_title">Название теста</string>
+    <string name="quiz_description">Описание теста</string>
+    <string name="quiz_group">Группа</string>
 </resources>

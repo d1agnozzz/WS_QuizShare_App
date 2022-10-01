@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -59,7 +58,7 @@ fun QPasswordField(
         },
 
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color(0x0C000000),
+            unfocusedBorderColor = AppTheme.colors.textFieldUnfocusedBorder,
             focusedBorderColor = AppTheme.colors.primaryAccent
 
         ),

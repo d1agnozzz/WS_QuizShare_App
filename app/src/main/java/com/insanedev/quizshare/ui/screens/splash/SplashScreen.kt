@@ -22,6 +22,8 @@ fun SplashScreen(
 ) {
     val viewState = splashViewModel.viewState.observeAsState(SplashViewState())
 
+    
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -30,7 +32,7 @@ fun SplashScreen(
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_splash_icon),
             contentDescription = "splash icon",
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 

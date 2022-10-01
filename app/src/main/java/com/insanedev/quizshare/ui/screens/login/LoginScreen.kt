@@ -19,7 +19,7 @@ import com.insanedev.quizshare.ui.screens.login.views.SignUpView
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel,
-    onLoginPassed: () -> Unit
+    onLoginPassed: (email: String) -> Unit
 ) {
 
     val viewState = loginViewModel.viewState.observeAsState(LoginViewState())
@@ -89,7 +89,7 @@ fun LoginScreen(
 
     LaunchedEffect(key1 = viewState.value.isLoginPassed) {
         when (viewState.value.isLoginPassed) {
-            true -> onLoginPassed.invoke()
+            true -> onLoginPassed(viewState.value.emailValue)
             false -> Unit
         }
     }

@@ -9,6 +9,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.utils.io.errors.*
 
 
 class ApiServiceImpl(
@@ -16,17 +17,20 @@ class ApiServiceImpl(
 ) : ApiService {
 
     override suspend fun tryLogin(email: String, password: String): LoginResult {
-        val response = client.post {
-            url(ApiRoutes.LOGIN)
-            contentType(ContentType.Application.Json)
-            setBody(LoginRequestRemote(email, password))
-        }
-        val token = response.body<String>()
+        try {
+            val response = client.post {
+                url(ApiRoutes.LOGIN)
+                contentType(ContentType.Application.Json)
+                setBody(LoginRequestRemote(email, password))
+            }
 
-        return when (response.status) {
-            HttpStatusCode.BadRequest -> LoginResult.IncorrectCredentials
-            HttpStatusCode.OK -> LoginResult.Ok(token)
-            else -> LoginResult.SomethingWentWrong
+            return when (response.status) {
+                HttpStatusCode.BadRequest -> LoginResult.IncorrectCredentials
+                HttpStatusCode.OK -> LoginResult.Ok(token = response.body<LoginResponseRemote>().token)
+                else -> LoginResult.SomethingWentWrong
+            }
+        } catch (e: IOException) {
+            return LoginResult.SomethingWentWrong
         }
     }
 
@@ -37,6 +41,7 @@ class ApiServiceImpl(
         secondName: String,
         patronymicName: String?
     ): RegisterResult {
+        try {
         val response = client.post {
             url(ApiRoutes.REGISTER)
             contentType(ContentType.Application.Json)
@@ -44,31 +49,31 @@ class ApiServiceImpl(
         }
 
 
-        return try {
-            when (response.status) {
+        return when (response.status) {
                 HttpStatusCode.BadRequest -> RegisterResult.EmailIsNotValid
                 HttpStatusCode.Conflict -> RegisterResult.EmailAlreadyExists
                 HttpStatusCode.OK -> RegisterResult.Ok(response.body<RegisterResponseRemote>().token)
                 else -> RegisterResult.SomethingWentWrong
             }
-        } catch (e: Exception) {
-            RegisterResult.SomethingWentWrong
+        } catch (e: IOException) {
+            return RegisterResult.SomethingWentWrong
         }
     }
 
     override suspend fun tryAuth(token: String): AuthResult {
+        return try {
         val response = client.post {
             url(ApiRoutes.AUTH)
             contentType(ContentType.Application.Json)
             setBody(AuthRequestRemote(token))
         }
 
-        return try {
+
             when (response.status){
                 HttpStatusCode.OK -> AuthResult.Ok(response.body<AuthResponseRemote>().email)
                 else -> AuthResult.Err
             }
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             AuthResult.Err
         }
     }

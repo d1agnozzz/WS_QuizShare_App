@@ -9,12 +9,10 @@ import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.insanedev.quizshare.ui.theme.AppTheme
@@ -27,7 +25,6 @@ fun QTextField(
     onTextFieldChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    errorText: String = "",
     secureText: Boolean = false,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(),
@@ -53,14 +50,13 @@ fun QTextField(
                 letterSpacing = 0.1.sp
             )
         },
-
         trailingIcon = {
             if (isError) {
                 Icon(Icons.Default.ErrorOutline, contentDescription = "error sign")
             }
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color(0x0C000000),
+            unfocusedBorderColor = AppTheme.colors.textFieldUnfocusedBorder,
             focusedBorderColor = AppTheme.colors.primaryAccent,
             focusedLabelColor = AppTheme.colors.primaryAccent
 
@@ -68,6 +64,7 @@ fun QTextField(
         ),
         enabled = enabled,
         singleLine = true,
+        maxLines = 1,
         shape = RoundedCornerShape(8.dp),
         visualTransformation = if (secureText) PasswordVisualTransformation() else VisualTransformation.None,
         onValueChange = onTextFieldChange,
@@ -84,10 +81,4 @@ fun QTextField(
 //            modifier = Modifier.padding(start = 16.dp, top = 3.dp)
 //        )
 //    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun QTextFieldPreview() {
-    QTextField(value = "", label = "Test text field", onTextFieldChange = {})
 }

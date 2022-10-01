@@ -1,15 +1,9 @@
 package com.insanedev.quizshare.ui.screens.login.views
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -52,7 +46,6 @@ fun SignUpView(
                 value = viewState.firstNameValue,
                 enabled = !viewState.isPerforming,
                 isError = firstNameHelperTextId != null,
-                errorText = "Это обязательное поле",
                 label = stringResource(id = R.string.first_name_hint),
                 onTextFieldChange = onFirstNameFieldChange,
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -221,11 +214,19 @@ fun SignUpView(
                     contentColor = Color.White
                 ),
             ) {
-                Text(
-                    text = stringResource(id = R.string.btn_register),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp
-                )
+                when (viewState.isPerforming) {
+                    true -> CircularProgressIndicator(
+                        color = Color.White,
+                        strokeWidth = 4.dp,
+                        modifier = Modifier.size(28.dp)
+                    )
+                    false -> Text(
+                        text = stringResource(id = R.string.btn_register),
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp
+                    )
+                }
+
             }
             OutlinedButton(
                 modifier = Modifier

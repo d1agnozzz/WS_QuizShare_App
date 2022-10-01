@@ -10,7 +10,8 @@ data class Colors(
     val background: Color,
     val primaryText: Color,
     val secondaryText: Color,
-    val completeStatus: Color
+    val completeStatus: Color,
+    val textFieldUnfocusedBorder: Color
 )
 
 val lightPalette = Colors(
@@ -21,5 +22,6 @@ val lightPalette = Colors(
     background = Color(0xFFFFFFFF),
     primaryText = Color(0xff1C1B1F),
     secondaryText = Color(0xff49454F),
-    completeStatus = Color(0xff66FFA3)
+    completeStatus = Color(0xff66FFA3),
+    textFieldUnfocusedBorder = Color(0x0C000000)
 )

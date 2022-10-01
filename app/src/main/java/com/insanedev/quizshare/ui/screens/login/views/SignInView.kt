@@ -12,6 +12,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,11 +36,13 @@ fun SignInView(
     val focusManager = LocalFocusManager.current
 
     Column {
+        // Email
         QTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             value = viewState.emailValue,
             enabled = !viewState.isPerforming,
+            isError = viewState.emailHelperTextId != null,
             label = stringResource(id = R.string.email_hint),
             onTextFieldChange = onEmailFieldChange,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -50,12 +53,24 @@ fun SignInView(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             )
         )
+        Text(
+            text = viewState.emailHelperTextId?.let { stringResource(id = it) } ?: "",
+//            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+            style = TextStyle(
+                fontSize = 12.sp,
+                letterSpacing = 0.4.sp
+            ),
+            modifier = Modifier.padding(start = 16.dp)
+        )
+
+        // Password
         QPasswordField(
             modifier = Modifier
                 .padding(top = 8.dp)
                 .fillMaxWidth(),
             value = viewState.passwordValue,
             enabled = !viewState.isPerforming,
+            isError = viewState.passwordHelperTextId != null,
             label = stringResource(id = R.string.password_hint),
             onTextFieldChange = onPasswordFieldChange,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -65,6 +80,15 @@ fun SignInView(
             keyboardActions = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
             )
+        )
+        Text(
+            text = viewState.passwordHelperTextId?.let { stringResource(id = it) } ?: "",
+//            color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+            style = TextStyle(
+                fontSize = 12.sp,
+                letterSpacing = 0.4.sp
+            ),
+            modifier = Modifier.padding(start = 16.dp)
         )
         Text(
             modifier = Modifier
